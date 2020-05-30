@@ -1,38 +1,151 @@
-.App {
+#app{
+  padding-left: 3em;
+  padding-right: 3em;
+  padding-top: 0em;
+  padding-bottom: 2em;
+  position: center;
+}
+
+.nameTitle{
+  
+  font-family: 'Baloo Chettan 2', cursive;
+  color: white;
+  font-size: small;
+  margin-top: 0; 
+}
+
+p, h1, h2, h3, h4{
+  font-family: 'Baloo Chettan 2', cursive;
+}
+
+@font-face{
+  font-family: 'Baloo Chettan 2', cursive;
+  src: url('https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&display=swap');
+}
+
+#ex-grid{
+  display: grid;
+  padding: 0.25em;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+#example{
+  display: inline-block;
+  background-color: rgb(165, 165, 165);  
+  border-radius: 25px;
+  width: 150px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border:1px solid #ffffff00;/**/
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#selected-button{
+  background-color: rgb(255, 233, 233)
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button {
+  display: inline-block;
+  font-family : 'Baloo Chettan 2', cursive;
+  font-size: 1em;
+  height: 50px;
+  border-radius: 5px;
+  background-color: rgb(255, 157, 157);
+  width: auto;
+  height: auto+20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+
+#example img {
+  filter: grayscale(100%);
+  opacity: 0.3;
+}
+
+
+#hemisphere{
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#bug-table{
+  display: grid;
+  width: 100%;
+  padding-top: 2em;
+  border-radius: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#fish-table{
+  display: grid;
+  width: 100%;
+  padding-top: 0.5em;
+  border-radius: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+#fish-table #table-body-cell{
+  display: inline-block;
+  border:1px solid #ffffff;/**/
+  background-color: rgb(71, 133, 240);  
+  border-radius: 25px;
+  text-align: center;
+  width: auto;
+}
+
+#bug-table #table-body-cell{
+  display: inline-block;
+  vertical-align: center;
+  border:1px solid #feffd4d2;/**/
+  background-color: #268c16c1; 
+  border-radius: 25px;
+  text-align: center;
+  width: auto;
+}
+
+
+body {
+  font-family: 'Muli', sans-serif;
+}
+
+#full-display{
+  width: 100%;
+  float:left;
+}
+
+#left-input{
+  width: 60%;
+  float:left;
+}
+
+#right-input{
+  width: 40%;
+  float:right;
+
+}
+
+#option-text{
+  display:grid;
+}
+
+#hemisphere-input, #months-input, #display-input{
+  display:grid;
+  width: 90%;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+
+html{
+  background-color: #feffd4d2; 
+}
+
+
+h1{
+  font-size: 4em;
+  font-weight: bolder;
+}
+
+
+p{
+  font-size: small;
+
 }
