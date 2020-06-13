@@ -18,7 +18,7 @@ class MonthDisplay extends React.Component{
             "January", "Feburary", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
         ],
-        critterpedia_view: false,
+        critterpedia_view: true,
     }
 
     componentDidMount(){
@@ -157,8 +157,11 @@ class MonthDisplay extends React.Component{
             <Critterpedia 
                 showBugs={this.state.display_bugs} 
                 showFish={this.state.display_fish}
-                buglist={this.state.valid_bugs}
-                fishlist={this.state.valid_fish}/>
+                buglist={this.state.bugs_data}
+                fishlist={this.state.fish_data}
+                validBugs={this.state.valid_bugs}
+                validFish={this.state.valid_fish}
+            />
             :
             <OutputBlock 
                 showBugs={this.state.display_bugs} 
@@ -182,18 +185,18 @@ class MonthDisplay extends React.Component{
                             );
                         })}
                     </div>
-                    <div>
-                        <button onClick={()=>this.toggleCritterpedia()}>
-                            Toggle Critterpedia View
-                        </button>
-                    </div>
-
+                    
+                    <h2 id="sc-option-text" className="sc-h2">Display</h2>
                     <div id="sc-left-input">
-                        <h2 id="sc-option-text" className="sc-h2">Display</h2>
                         <div id="sc-display-input">
                             <button className="sc-fish-display-button" id="sc-selected-button" onClick={() => this.toggleDisplay('fish')}>Hide Fish</button>
                             <button className="sc-bug-display-button" id="sc-selected-button" onClick={() => this.toggleDisplay('bugs')}>Hide Bugs</button>
                         </div> 
+                    </div>
+                    <div id="sc-right-input">
+                        <button onClick={()=>this.toggleCritterpedia()}>
+                            Toggle Details View
+                        </button>
                     </div>
                 </div>
                 <div id="sc-full-display">

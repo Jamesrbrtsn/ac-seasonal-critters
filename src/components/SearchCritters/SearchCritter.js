@@ -5,6 +5,7 @@ import searchList from '../../data/searchList';
 import SelectedCard from './helpers/SelectedCard';
 import fishData from '../../data/fish.json';
 import bugsData from '../../data/bugs.json';
+import CritterTable from '../tracker/CritterTable';
 
 class SearchCritter extends React.Component{
     
@@ -12,7 +13,8 @@ class SearchCritter extends React.Component{
         results: [],
         directory: [],
         selected: null,
-        match: true
+        match: true,
+        critterTable: null
     };
 
     componentDidMount(){
@@ -65,7 +67,22 @@ class SearchCritter extends React.Component{
         this.setState({ selected: data});
     }
 
+    tableToggle = (type) =>{
+        this.setState({critterTable: type}, console.log(this.state.critterTable));
+    }
+
     render(){
+
+        let critterTable = (this.state.critterTable==='bug') ?
+            <CritterTable 
+            list={bugsData} 
+            changeSelected={this.changeSelection}
+            type='bug'/> : (this.state.critterTable==='fish') ?
+                <CritterTable 
+                    list={fishData} 
+                    changeSelected={this.changeSelection}
+                    type= 'fish'/> : <div></div>;
+
 
         let match = (this.state.match===false) ?
             <div> No Critter found matching that name... </div> 
@@ -81,6 +98,11 @@ class SearchCritter extends React.Component{
         return(
             <div>
                 {selected}
+                <h2>Search by Critter Table</h2>
+                <button onClick={() => this.tableToggle('bug')}>Bug</button>
+                <button onClick={() => this.tableToggle('fish')}>Fish</button>
+                <button onClick={() => this.tableToggle(null)}>X</button>
+                {critterTable}
                 <SearchBar search={this.onSearchSubmit}/>
                 {match}
                 <ResultList 

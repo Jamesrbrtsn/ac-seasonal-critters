@@ -60,13 +60,13 @@ body {
 }
 
 #sc-months-input > #sc-selected-button{
-  background-color: rgb(255, 233, 233)
+  background-color: rgb(255, 157, 157);
 }
 #sc-hemisphere-input > #sc-selected-button{
-  background-color: rgb(255, 233, 233)
+  background-color: rgb(255, 157, 157);
 }
 #sc-display-input > #sc-selected-button{
-  background-color: rgb(255, 233, 233)
+  background-color: rgb(255, 157, 157);
 }
 
 #sc-months-input > button{
@@ -75,7 +75,7 @@ body {
   font-size: 1em;
   height: 50px;
   border-radius: 5px;
-  background-color: rgb(255, 157, 157);
+  background-color: rgb(255, 233, 233);
   width: auto;
   height: auto+20px;
 }
@@ -86,7 +86,7 @@ body {
   font-size: 1em;
   height: 50px;
   border-radius: 5px;
-  background-color: rgb(255, 157, 157);
+  background-color: rgb(255, 233, 233);
   width: auto;
   height: auto+20px;
 }
@@ -97,7 +97,7 @@ body {
   font-size: 1em;
   height: 50px;
   border-radius: 5px;
-  background-color: rgb(255, 157, 157);
+  background-color: rgb(255, 233, 233);
   width: auto;
   height: auto+20px;
 }
