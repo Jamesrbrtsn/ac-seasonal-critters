@@ -6,8 +6,8 @@ export class FishTable extends React.Component {
     render(){
         return (
             <div>
-                <h2>Active Fish ({this.props.list.length})</h2>
-                <div id="fish-table">
+                <h2 id="sc-h2">Active Fish ({this.props.list.length})</h2>
+                <div id="sc-fish-table">
                     {this.props.list.map(element =>
                         <Fish key={element["id"]} {...element}/>
                     )}

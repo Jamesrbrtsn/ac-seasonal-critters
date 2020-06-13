@@ -1,16 +1,39 @@
 import React from 'react';
 import './App.css';
-import IntroBlock from './components/intro-block'
-import InputBlock from './components/input-block'
+import NavigationBlock from './components/NavigationBlock';
+import Header from './components/Header';
 
-function App() {
-  return (
-    <div id="app">
-      <IntroBlock />
-      <InputBlock />
-      <br></br>
-    </div>
-  );
+
+class App extends React.Component{
+
+  state={
+    header:true,
+    buttonText: 'hide'
+  }
+
+  toggleHeader = () => {
+    let value = this.state.header;
+    let text = (this.state.buttonText==='hide') ?
+      'show' : 'hide';
+    this.setState({header: !value, buttonText: text});
+
+  }
+  
+  render(){
+
+    let header = (this.state.header===true) ?
+      <Header />: <div></div>
+
+    return (
+      <div id="seasonal-critters">
+        <h1 id="sc-h1">Seasonal Critters</h1>
+        {header}
+        <button id="intro-toggle" onClick={()=>this.toggleHeader()}>{this.state.buttonText}</button>
+        <br></br>
+        <NavigationBlock/>
+      </div>
+    );
+  }
 }
 
 export default App;
