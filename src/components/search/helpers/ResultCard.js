@@ -3,7 +3,6 @@ import React from 'react';
 const ResultCard = props => {
 
     let data = props.data;
-    console.log(data);
 
     return(
         <div onClick={()=>props.selectionFunction(data, props.type)}

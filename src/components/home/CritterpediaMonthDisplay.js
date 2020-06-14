@@ -1,6 +1,6 @@
 import React from 'react'
 import MonthCritterTable from './MonthCritterTable';
-import SelectedCard from '../SearchCritters/helpers/SelectedCard';
+import SelectedCard from '../search/helpers/SelectedCard';
 
 class Critterpedia extends React.Component{
 
@@ -37,6 +37,7 @@ class Critterpedia extends React.Component{
                     changeSelected={this.changeSelection}
                     valid={this.props.validBugs}
                     type='bug'/>
+                <br></br>
                 <MonthCritterTable 
                     list={this.props.fishlist} 
                     valid={this.props.validFish}
@@ -68,19 +69,30 @@ class Critterpedia extends React.Component{
             </div>
         }
         
+        let typeOfSelected = 'null';
+        if(this.state.selected!==null){
+            typeOfSelected = this.state.selected.type;
+        }   
+        const selectionList = (typeOfSelected==='bug') ?
+            this.props.buglist : (typeOfSelected==='fish') ?
+                this.props.fishlist : [];
 
         let selected = (this.state.selected===null) ?
             <div></div> :
             <SelectedCard data={this.state.selected}
                 changeSelected={this.changeSelection}
                 changeSelectedById={this.changeSelectedById}
+                list={selectionList}
                 />
 
 
         return(
             <div>
+                <div id="bottom-bottom"></div>
                 {selected}
+                <div id="bottom-bottom"></div>
                 {output}
+                <div id="bottom-bottom"></div>
             </div>
         )
     }

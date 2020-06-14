@@ -1,15 +1,15 @@
 import React from 'react';
-import OutputBlock from './output-block';
+import OutputBlock from './OutputBlock';
 import Critterpedia from './CritterpediaMonthDisplay';
 
 class MonthDisplay extends React.Component{
 
     state = {
-        south: this.props.south,
-        north: this.props.north,
+        north: false,
+        south: false,
+        months : [],
         fish_data : this.props.fish,
         bugs_data : this.props.bugs,
-        months : this.props.months,
         display_bugs : true,
         display_fish : true,
         valid_fish: [],
@@ -22,12 +22,32 @@ class MonthDisplay extends React.Component{
     }
 
     componentDidMount(){
-        let arr = this.state.months;
+        let date = new Date();
+        let ar = [false, false, false, false, false, false,
+            false, false, false, false, false, false];
+        let month = date.getMonth();
+        ar[month] = true;
+        this.setState({ months : ar });
+
+        window.navigator.geolocation.getCurrentPosition(
+            (position) => {
+                (position.coords.latitude > 0) ? 
+                    this.setState({ north: true}, ()=>{
+                        this.buttonCheckHemi('north') 
+                    })
+                    : 
+                    this.setState({ south: true}, ()=> {
+                        this.buttonCheckHemi('south');
+                    });
+            }
+        );
+
+        let arr = ar;
         for(let i = 0; i<arr.length; i++){
             this.fixMonthVisual(i,arr);
         }
         this.getValidCritters();
-};
+    };
 
     toggleMonth(index){
         let monthsUpdated = this.state.months;
@@ -35,7 +55,6 @@ class MonthDisplay extends React.Component{
         this.setState({months: monthsUpdated},()=>{
             this.fixMonthVisual((index-1),this.state.months)
             this.getValidCritters();
-            //console.log(this.state);
         });
     };
 
@@ -63,7 +82,6 @@ class MonthDisplay extends React.Component{
         this.setState({
             critterpedia_view: !current
         })
-        console.log("toggled");
     }
 
     updateDisplayButton(type){
@@ -150,11 +168,40 @@ class MonthDisplay extends React.Component{
                 valid_fish: [...validFish]
         });
     };
+
+
+    selectHemisphere(index){
+        let current;
+        if(index === 1){ 
+            current = this.state.north;
+            this.setState({ north: !current}, () =>{
+                this.buttonCheckHemi('north');
+                }
+            );
+        }
+        else if (index === 2){ 
+            current = this.state.south;
+            this.setState({ south: !current},() =>{
+                this.buttonCheckHemi('south');
+                }
+            );
+        }
+    };
+
+    buttonCheckHemi(type){
+        let hemiButton = document.querySelector(`.sc-${type}`);
+        if(this.state[type]===true){ 
+            hemiButton.id = "sc-selected-button";
+        }
+        else{ hemiButton.id = "sc"; }
+        this.getValidCritters();
+    };
+
     
     render(){
-
         let output = (this.state.critterpedia_view) ?
             <Critterpedia 
+                key={`state-${this.state.north}-${this.state.south}`}
                 showBugs={this.state.display_bugs} 
                 showFish={this.state.display_fish}
                 buglist={this.state.bugs_data}
@@ -172,6 +219,15 @@ class MonthDisplay extends React.Component{
         return(
             <div>
                 <div>
+                    <div id="sc-navigation-block">
+                        <h2 id="sc-option-text" className="sc-h2">Hemisphere</h2>
+                        <div id="sc-hemisphere-input">
+                            <button className="sc-north"
+                            onClick={() => this.selectHemisphere(1)}>Northern Hemisphere</button>
+                            <button className="sc-south" 
+                            onClick={() => this.selectHemisphere(2)}>Southern Hemisphere</button>
+                        </div>
+                    </div>
                     <h2 id="sc-option-text" className="sc-h2">Month</h2>
                     <div id="sc-months-input">
                         {this.state.buttonMonths.map((month)=>{
@@ -194,7 +250,7 @@ class MonthDisplay extends React.Component{
                         </div> 
                     </div>
                     <div id="sc-right-input">
-                        <button onClick={()=>this.toggleCritterpedia()}>
+                        <button id="sc-right-input" onClick={()=>this.toggleCritterpedia()}>
                             Toggle Details View
                         </button>
                     </div>

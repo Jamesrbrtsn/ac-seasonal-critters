@@ -27,8 +27,16 @@ class App extends React.Component{
     return (
       <div id="seasonal-critters">
         <h1 id="sc-h1">Seasonal Critters</h1>
+        <button 
+          id="intro-toggle" 
+          onClick={()=>this.toggleHeader()}
+          style={{
+            position:'absolute',
+            top:'3em',
+            right:'5em'
+          }}
+        >{this.state.buttonText}</button>
         {header}
-        <button id="intro-toggle" onClick={()=>this.toggleHeader()}>{this.state.buttonText}</button>
         <br></br>
         <NavigationBlock/>
       </div>

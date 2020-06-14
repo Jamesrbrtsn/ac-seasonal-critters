@@ -1,5 +1,5 @@
 import React from 'react'
-import Bug from './bug'
+import Bug from './Bug'
 
 export class BugsTable extends React.Component {
 

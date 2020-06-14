@@ -5,7 +5,7 @@ import searchList from '../../data/searchList';
 import SelectedCard from './helpers/SelectedCard';
 import fishData from '../../data/fish.json';
 import bugsData from '../../data/bugs.json';
-import CritterTable from '../tracker/CritterTable';
+import CritterTable from '../home/CritterTable';
 
 class SearchCritter extends React.Component{
     
@@ -59,9 +59,9 @@ class SearchCritter extends React.Component{
         this.setState({selected:data});
     }
 
-    changeSelection = (data, type='undeclared') => {
+    changeSelection = (data, typePick='undeclared') => {
         // console.log(type);
-        if(data!==null){data.type = type;}
+        if(data!==null){data.type = typePick}
         // console.log("-.....");
         // console.log(data);
         this.setState({ selected: data});
@@ -83,26 +83,37 @@ class SearchCritter extends React.Component{
                     changeSelected={this.changeSelection}
                     type= 'fish'/> : <div></div>;
 
-
         let match = (this.state.match===false) ?
             <div> No Critter found matching that name... </div> 
             :<div></div>
 
+        let typeOfSelected = 'null';
+        if(this.state.selected!==null){
+            typeOfSelected = this.state.selected.type;
+        }   
+        
+        const selectionList = (typeOfSelected==='bug') ?
+            bugsData : (typeOfSelected==='fish') ?
+                fishData : [];
+
         let selected = (this.state.selected===null) ?
             <div></div> :
-            <SelectedCard data={this.state.selected}
-                changeSelected={this.changeSelection}
-                changeSelectedById={this.changeSelectedById}
-                />
+            <div>
+                <SelectedCard data={this.state.selected}
+                    changeSelected={this.changeSelection}
+                    changeSelectedById={this.changeSelectedById}
+                    list={selectionList}/>
+            </div>
 
         return(
             <div>
                 {selected}
                 <h2>Search by Critter Table</h2>
-                <button onClick={() => this.tableToggle('bug')}>Bug</button>
-                <button onClick={() => this.tableToggle('fish')}>Fish</button>
-                <button onClick={() => this.tableToggle(null)}>X</button>
+                    <button onClick={() => this.tableToggle('bug')}>Bug</button>
+                    <button onClick={() => this.tableToggle('fish')}>Fish</button>
+                    <button onClick={() => this.tableToggle(null)}>X</button>`
                 {critterTable}
+                <h2>Search by Keyword, Id, or Type</h2>
                 <SearchBar search={this.onSearchSubmit}/>
                 {match}
                 <ResultList 

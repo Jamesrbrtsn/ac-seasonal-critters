@@ -16,7 +16,6 @@ function MonthCritterTable(props){
     const valids = props.valid.map((obj)=>{
         return ((obj.id));
     });
-    console.log(valids);
 
     const unselectedStyling = {
         textAlign: 'center',
@@ -52,7 +51,7 @@ function MonthCritterTable(props){
     return (
 
         <div>
-            <h2>{title} MonthCritterTable </h2>
+            <h2>{title} List</h2>
             <div style={{
                     display: 'grid',
                     gridTemplateRows: '1fr 1fr 1fr 1fr 1fr',

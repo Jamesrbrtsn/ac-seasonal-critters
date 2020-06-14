@@ -1,6 +1,11 @@
 body {
   background-color: #feffd4d2; 
+  padding:2em;
 }
+#bottom-bottom{
+  padding-bottom: 3em;
+}
+
 
 #seasonal-critters{
   padding-left: 3em;
@@ -11,6 +16,36 @@ body {
   font-family: 'Muli', sans-serif;
   background-color: #feffd4d2; 
 }
+
+#sc-navigation-bar{
+  font-family: 'Muli', sans-serif;
+  border-style: solid;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(44, 133, 36);
+  top: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+}
+
 
 #sc-intro-block #sc-input-block{
   background-color:  #feffd4d2; 
@@ -41,18 +76,17 @@ body {
 
 #sc-ex-grid{
   display: grid;
-  padding: 0.25em;
   width: 100%;
   grid-gap: 5px;
   background-color:  #feffd4d2; 
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  
 }
 
 #sc-example{
   display: inline-block;
   background-color: rgb(165, 165, 165);  
   border-radius: 25px;
-  width: 150px;
+  width: 100%;
   padding-top: 1em;
   padding-bottom: 1em;
   border:1px solid #ffffff00;/**/
@@ -124,7 +158,7 @@ body {
 .result-list {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-	grid-gap: 1 10px;
+	grid-gap: 0px;
   grid-auto-rows: px;
   text-align: center;
 }
@@ -139,13 +173,14 @@ body {
   background-color: #268c16c1; 
   text-align: center;
   width:50%;
-  border-radius: 40px;
+  border-radius: 100px;
+  float: left;
 }
 
 
 #bug-card{
   background-color: #268c16c1; 
-  border-radius: 10px;
+  border-style: solid;
 }
 
 
@@ -153,21 +188,29 @@ body {
   background-color: rgb(71, 133, 240); 
   text-align: center;
   width:50%;
-  border-radius: 25px;
+  border-radius: 100px;
+  float: left;
 }
 
 #fish-card{
   background-color: rgb(71, 133, 240); 
-  border-radius: 10px;
+  border-style: solid;
 }
 
+#selected-month-view{
+  float:right;
+  width: 47%;
+  position: center;
+  vertical-align: middle;
+  padding-top: 2em;
+  padding-bottom: 6em;
+}
 
 #sc-fish-table{
   display: grid;
   width: 100%;
   padding-top: 0.5em;
   border-radius: 25px;
-  background-color:  #feffd4d2; 
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
@@ -193,20 +236,16 @@ body {
 #sc-full-display{
   width: 100%;
   float:left;
-  background-color:  #feffd4d2; 
 }
 
 #sc-left-input{
   width: 60%;
   float:left;
-  background-color:  #feffd4d2; 
 }
 
 #sc-right-input{
-  width: 40%;
+  width: 30%;
   float:right;
-  background-color:  #feffd4d2; 
-
 }
 
 #sc-option-text{
@@ -216,9 +255,25 @@ body {
 
 #sc-hemisphere-input, #sc-months-input, #sc-display-input{
   display:grid;
-  width: 90%;
+  width: 100%;
   background-color:  #feffd4d2; 
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+#sc-fish-shadow-list{
+  display: grid;
+  grid-template-columns: 100px 100px 100px 100px;
+  grid-auto-flow: row;
+}
+
+#sc-fish-shadow-list img{
+  display: grid;
+  width: 100px;
+  height: 100px;
+}
+
+#sc-fish-shadow-list p{
+  text-align: center;
 }
 
 
@@ -230,5 +285,4 @@ body {
 
 #sc-p{
   font-size: small;
-
 }

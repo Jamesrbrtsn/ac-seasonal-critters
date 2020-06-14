@@ -1,5 +1,5 @@
 import React from 'react'
-import Fish from './fish';
+import Fish from './Fish';
 
 export class FishTable extends React.Component {
 
