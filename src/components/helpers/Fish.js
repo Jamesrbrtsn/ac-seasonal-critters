@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Fish(props){
+const Fish = (props) => {
     let timeCheck = props.time;
     let timeFixed = "";
     if (timeCheck === "m"){ timeFixed = "9am - 4pm"; }
@@ -17,5 +17,7 @@ export default function Fish(props){
             <p id="sc-p">Size: {props.size}</p>
             <p id="sc-p">{timeFixed}</p>
         </div>
-    )
+    );
 }
+
+export default Fish;

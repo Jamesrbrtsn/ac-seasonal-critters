@@ -2,10 +2,10 @@ body {
   background-color: #feffd4d2; 
   padding:2em;
 }
+
 #bottom-bottom{
   padding-bottom: 3em;
 }
-
 
 #seasonal-critters{
   padding-left: 3em;
@@ -17,10 +17,26 @@ body {
   background-color: #feffd4d2; 
 }
 
+.sc-header-toggle-btn{
+  float: right;
+  position: absolute;
+}
+
 #sc-navigation-bar{
+  list-style-type: none;
   font-family: 'Muli', sans-serif;
   border-style: solid;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(44, 133, 36);
+  top: 0;
+}
+
+#sc-navigation-bar > ul{
   list-style-type: none;
+  font-family: 'Muli', sans-serif;
+  border-style: solid;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -51,9 +67,6 @@ li a:hover {
   background-color:  #feffd4d2; 
 }
 
-#intro-toggle{
-  float: right;
-}
 
 .sc-nameTitle{
   font-family: 'Baloo Chettan 2', cursive;

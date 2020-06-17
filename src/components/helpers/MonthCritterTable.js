@@ -1,28 +1,32 @@
-import React from 'react'
+import React from 'react';
 
-function CritterTable(props){
-
-
-    //changeSelected={this.changeSelection}
-    //changeSelectedById={this.changeSelectedById}
-    function changeSelection(data, type){
-        props.changeSelected(data, type);
-    }   
+function MonthCritterTable(props){
 
     const firstLetter =  props.type.substr(0,1);
     let type = (firstLetter==='b') ? 'bug': 'fish';
     const title = (firstLetter.toUpperCase()).concat(props.type.substr(1));
     const critterList = props.list;
+    const valids = props.valid.map((obj)=>{
+        return ((obj.id));
+    });
 
+    const unselectedStyling = {
+        textAlign: 'center',
+        display: 'inline-block',
+    }
+
+    const selectedStyling = {
+        textAlign: 'center',
+        display: 'inline-block',
+        backgroundColor: 'rgb(255, 157, 157)',
+    }
 
     const buttons = [...Array(80).keys()].map((num) => {
         return(
             <button 
-                onClick={()=>changeSelection(critterList[num],type)}
-                style={{
-                    textAlign: 'center',
-                    display: 'inline-block',
-                }}
+                onClick={()=>props.changeSelected(critterList[num],type)}
+                style={(valids.includes(critterList[num].id)) ?
+                    selectedStyling : unselectedStyling }
                 id={`critter-btn-${num}-${firstLetter}`}
                 key={`${num}${firstLetter}`}>
                 <img alt={`icon for ${critterList[num].name}`}
@@ -40,17 +44,16 @@ function CritterTable(props){
     return (
 
         <div>
-            <h2>{title} CritterTable </h2>
+            <h2>{title} List</h2>
             <div style={{
                     display: 'grid',
                     gridTemplateRows: '1fr 1fr 1fr 1fr 1fr',
                     gridAutoFlow: 'column'
-                }}
-            >
+                }}>
                 {buttons}
             </div>
         </div>
-    )
+    );
 }
 
-export default CritterTable;
+export default MonthCritterTable;

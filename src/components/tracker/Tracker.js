@@ -1,8 +1,12 @@
 import React from 'react';
-import OutputBlock from './OutputBlock';
-import Critterpedia from './CritterpediaMonthDisplay';
+import DualToggle from '../helpers/DualToggle';
+import MonthCritterTable from '../helpers/MonthCritterTable';
+import CritterTable from '../helpers/CritterTable';
+import FishTable from '../helpers/FishTable';
+import BugTable from '../helpers/BugTable';
+import SelectedCard from '../helpers/SelectedCard';
 
-class MonthDisplay extends React.Component{
+class Tracker extends React.Component{
 
     state = {
         north: false,
@@ -19,15 +23,16 @@ class MonthDisplay extends React.Component{
             "July", "August", "September", "October", "November", "December"
         ],
         critterpedia_view: true,
+        selected: null
     }
 
     componentDidMount(){
         let date = new Date();
-        let ar = [false, false, false, false, false, false,
+        let arr = [false, false, false, false, false, false,
             false, false, false, false, false, false];
         let month = date.getMonth();
-        ar[month] = true;
-        this.setState({ months : ar });
+        arr[month] = true;
+        this.setState({ months : arr });
 
         window.navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -42,17 +47,16 @@ class MonthDisplay extends React.Component{
             }
         );
 
-        let arr = ar;
         for(let i = 0; i<arr.length; i++){
             this.fixMonthVisual(i,arr);
         }
         this.getValidCritters();
     };
 
-    toggleMonth(index){
-        let monthsUpdated = this.state.months;
-        monthsUpdated[index-1] = !(this.state.months[index-1]);
-        this.setState({months: monthsUpdated},()=>{
+    toggleMonth(index){ //wonky
+        let months_updated = this.state.months;
+        months_updated[index-1] = !(this.state.months[index-1]);
+        this.setState({months: months_updated},()=>{
             this.fixMonthVisual((index-1),this.state.months)
             this.getValidCritters();
         });
@@ -60,20 +64,14 @@ class MonthDisplay extends React.Component{
 
     toggleDisplay(input){
         if (input==='fish'){ 
-            let fishCheck = this.state.display_fish;
-            fishCheck = !fishCheck;  
+            let fish_check = !this.state.display_fish;
             this.updateDisplayButton('fish');
-            this.setState({
-                display_fish : fishCheck,
-            });
+            this.setState({ display_fish : fish_check});
         }
         else if (input==='bugs') {
-            let bugCheck = this.state.display_bugs;
-            bugCheck = !bugCheck; 
+            let bug_check = !this.state.display_bugs;
             this.updateDisplayButton('bug');
-            this.setState({
-                display_bugs : bugCheck
-            });
+            this.setState({ display_bugs : bug_check});
         }
     };
 
@@ -81,11 +79,10 @@ class MonthDisplay extends React.Component{
         let current = this.state.critterpedia_view;
         this.setState({
             critterpedia_view: !current
-        })
+        });
     }
 
     updateDisplayButton(type){
-        console.log(type);
         let button = document.querySelector(`.sc-${type}-display-button`);
         
         if (type==='bug'){type = "bugs"}
@@ -197,70 +194,124 @@ class MonthDisplay extends React.Component{
         this.getValidCritters();
     };
 
-    
-    render(){
-        let output = (this.state.critterpedia_view) ?
-            <Critterpedia 
-                key={`state-${this.state.north}-${this.state.south}`}
-                showBugs={this.state.display_bugs} 
-                showFish={this.state.display_fish}
-                buglist={this.state.bugs_data}
-                fishlist={this.state.fish_data}
-                validBugs={this.state.valid_bugs}
-                validFish={this.state.valid_fish}
-            />
-            :
-            <OutputBlock 
-                showBugs={this.state.display_bugs} 
-                showFish={this.state.display_fish}
-                buglist={this.state.valid_bugs}
-                fishlist={this.state.valid_fish}/>;
+    changeSelection = data => {
+        console.log('Change selection');
+        console.log(data);
+    }
 
-        return(
+    fixId = (id) => {
+        if(id===-1){return 79}
+        else if(id===80){return 0}
+        else{ return id}
+    }
+
+    changeSelection = (data, typePick='undeclared') => {
+        if(data!==null){data.type = typePick}
+        this.setState({ selected: data});
+    }
+    
+    displaySelected = () => {
+        let obj = this.state.selected;
+        if (obj===null){return <div></div>}
+        else{
+            let id = obj.id;
+            const [previous, next] = (obj.type==='fish') 
+                ? [this.state.fish_data[this.fixId(id-2)], this.state.fish_data[this.fixId(id)]] //[prev fish, next fish] 
+                : [this.state.bugs_data[this.fixId(id-2)], this.state.bugs_data[this.fixId(id)]]; //[prev bug, next bug]
+
+            console.log(this.state.selected);
+            return <SelectedCard data={this.state.selected}
+                previous={previous}
+                next={next}
+                changeSelected={this.changeSelection}/>
+        }
+    }
+
+
+
+    render(){
+
+        const selected = this.displaySelected();
+
+        const output = (this.state.critterpedia_view===true) 
+            ?   <DualToggle variables={[this.state.display_bugs, this.state.display_fish]}
+                message="No critter type selected"
+                componentOne={
+                    <MonthCritterTable 
+                    list={this.state.bugs_data} 
+                    changeSelected={this.changeSelection}
+                    valid={this.state.valid_bugs}
+                    type='bug'
+                    />
+                }
+                componentTwo={
+                    <MonthCritterTable 
+                    list={this.state.fish_data} 
+                    changeSelected={this.changeSelection}
+                    valid={this.state.valid_fish}
+                    type='fish'
+                    />
+                }/>
+            :   <DualToggle variables={[this.state.display_bugs, this.state.display_fish]}
+                message="No critter type selected"
+                componentOne={
+                    <BugTable list={this.state.valid_bugs}/>
+                }
+                componentTwo={
+                    <FishTable list={this.state.valid_fish}/>
+                }/>;
+            
+        return (
+        <div>
             <div>
-                <div>
-                    <div id="sc-navigation-block">
-                        <h2 id="sc-option-text" className="sc-h2">Hemisphere</h2>
-                        <div id="sc-hemisphere-input">
-                            <button className="sc-north"
-                            onClick={() => this.selectHemisphere(1)}>Northern Hemisphere</button>
-                            <button className="sc-south" 
-                            onClick={() => this.selectHemisphere(2)}>Southern Hemisphere</button>
-                        </div>
-                    </div>
-                    <h2 id="sc-option-text" className="sc-h2">Month</h2>
-                    <div id="sc-months-input">
-                        {this.state.buttonMonths.map((month)=>{
-                            return(
-                                <button 
-                                    key={month}
-                                    className={`sc-${month.toLowerCase()}Button`}
-                                    onClick={()=>this.toggleMonth(this.state.buttonMonths.indexOf(month)+1)}>
-                                    {month}
-                                </button>
-                            );
-                        })}
-                    </div>
-                    
-                    <h2 id="sc-option-text" className="sc-h2">Display</h2>
-                    <div id="sc-left-input">
-                        <div id="sc-display-input">
-                            <button className="sc-fish-display-button" id="sc-selected-button" onClick={() => this.toggleDisplay('fish')}>Hide Fish</button>
-                            <button className="sc-bug-display-button" id="sc-selected-button" onClick={() => this.toggleDisplay('bugs')}>Hide Bugs</button>
-                        </div> 
-                    </div>
-                    <div id="sc-right-input">
-                        <button id="sc-right-input" onClick={()=>this.toggleCritterpedia()}>
-                            Toggle Details View
-                        </button>
+                <div id="sc-navigation-block">
+                    <h2 id="sc-option-text" className="sc-h2">Hemisphere</h2>
+                    <div id="sc-hemisphere-input">
+                        <button className="sc-north"
+                        onClick={() => this.selectHemisphere(1)}>Northern Hemisphere</button>
+                        <button className="sc-south" 
+                        onClick={() => this.selectHemisphere(2)}>Southern Hemisphere</button>
                     </div>
                 </div>
-                <div id="sc-full-display">
-                    {output}
+                <h2 id="sc-option-text" className="sc-h2">Month</h2>
+                <div id="sc-months-input">
+                    {this.state.buttonMonths.map((month)=>{
+                        return(
+                            <button 
+                                key={month}
+                                className={`sc-${month.toLowerCase()}Button`}
+                                onClick={()=>this.toggleMonth(this.state.buttonMonths.indexOf(month)+1)}>
+                                {month}
+                            </button>
+                        );
+                    })}
+                </div>
+                
+                <h2 id="sc-option-text" className="sc-h2">Display</h2>
+                <div id="sc-left-input">
+                    <div id="sc-display-input">
+                        <button className="sc-fish-display-button" id="sc-selected-button" onClick={() => this.toggleDisplay('fish')}>Hide Fish</button>
+                        <button className="sc-bug-display-button" id="sc-selected-button" onClick={() => this.toggleDisplay('bugs')}>Hide Bugs</button>
+                    </div> 
+                </div>
+                <div id="sc-right-input">
+                    <button id="sc-right-input" onClick={()=>this.toggleCritterpedia()}>
+                        Toggle Details View
+                    </button>
                 </div>
             </div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <div>
+            {selected}
+            </div>
+            <div>
+            {output}
+            </div>
+        </div>
         )
     };
 }
 
-export default MonthDisplay;
+export default Tracker;

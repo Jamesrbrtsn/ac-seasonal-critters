@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-export default function Bug(props){
+const Bug = (props) => {
 
     let timeCheck = props.time;
     let timeFixed;
     if (timeCheck === "mm"){ timeFixed = "4am - 7pm"; }
     else if(timeCheck ==="a"){ timeFixed = "All day"; }
-    else{ timeFixed=timeCheck }
+    else{ timeFixed=timeCheck; }
 
     return (
         <div id="sc-table-body-cell">
@@ -16,5 +16,7 @@ export default function Bug(props){
             <p id="sc-p">{props.location}</p>
             <p id="sc-p">{timeFixed}</p>
         </div>
-    )
+    );
 }
+
+export default Bug;

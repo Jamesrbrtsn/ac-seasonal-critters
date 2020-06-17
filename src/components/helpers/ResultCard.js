@@ -5,8 +5,8 @@ const ResultCard = props => {
     let data = props.data;
 
     return(
-        <div onClick={()=>props.selectionFunction(data, props.type)}
-            id={`${props.type}-card`}>
+        <div onClick={()=>props.selectionFunction(data, data.type)}
+            id={`${data.type}-card`}>
             <h3>
                 {data.name}
             </h3>

@@ -1,13 +1,10 @@
 import React from 'react';
-import BugCard from '../../home/Bug';
-import FishCard from '../../home/Fish';
+import BugCard from './Bug';
+import FishCard from './Fish';
 
 const SelectedCard = props => {
 
     let data = props.data;
-    let previousId = data.id-2, nextId = data.id;
-    if(previousId<0){previousId=79}
-    else if(nextId>79){nextId=0}
 
     let card = (data.type==='fish') ?
         <FishCard {...data}/> :
@@ -18,21 +15,20 @@ const SelectedCard = props => {
         months = (type==='north') ? data.months[0] : data.months[1];
         let allYearFlag = false;
         if(months[0]===-3){allYearFlag=true}
+
         let display = 
         ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'].map((mth, ind)=>{
-            return <div key={`div-month-display-${mth}`} 
+            return <div 
+                key={`div-month-display-${mth}`} 
                 id="div-month-display"
-                style={(months.includes(ind+1)===true||allYearFlag) ? 
-                    {backgroundColor: 'rgb(255, 157, 157)',
-                    textAlign: 'center',
-                    border: '1px solid'} : 
-                    {backgroundColor: 'rgb(255, 233, 233)',
-                    textAlign: 'center',
-                    border: '1px solid'}
-                }
-                >
-                {mth}
-            </div>
+                style={(months.includes(ind+1)===true||allYearFlag) 
+                ?   { backgroundColor: 'rgb(255, 157, 157)',
+                      textAlign: 'center',
+                      border: '1px solid' } 
+                :   { backgroundColor: 'rgb(255, 233, 233)',
+                      textAlign: 'center',
+                      border: '1px solid' }
+                }>{mth}</div>
         });
         return display;
     }
@@ -46,23 +42,23 @@ const SelectedCard = props => {
                     position: 'center',
                     filter: 'grayscale(100%) brightness(0)',
                     width: '15%'}}
-                    src={props.list[previousId].picturePath} />
+                    src={props.previous.picturePath} />
                 <img alt={`preview of next ${data.type}`}
                     style={{float: 'right',
                     display: 'inline-block',
                     position: 'center',
                     filter: 'grayscale(100%) brightness(0)',
                     width: '15%'}}
-                    src={props.list[nextId].picturePath} />
+                    src={props.next.picturePath} />
                 {card}
                 <br></br>
-                <button onClick={()=>props.changeSelectedById(data.id-1,data.type)}>
+                <button onClick={()=>props.changeSelected(props.previous,data.type)}>
                     {`previous ${data.type}`}
                 </button>
                 <button onClick={()=>props.changeSelected(null)}>
                     Deselect
                 </button>
-                <button onClick={()=>props.changeSelectedById(data.id+1, data.type)}>
+                <button onClick={()=>props.changeSelected(props.next,data.type)}>
                     {`next ${data.type}`}
                 </button>
                 <br></br>
